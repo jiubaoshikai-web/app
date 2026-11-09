@@ -14,7 +14,17 @@ pip install -r requirements.txt
 export ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-## 使い方
+## ブラウザ版 (おすすめ)
+```bash
+pip install anthropic            # ブラウザ版はこれだけでOK
+export ANTHROPIC_API_KEY=sk-ant-...
+python -m king_english.server    # → http://127.0.0.1:8000 を Chrome / Edge で開く
+```
+- 音声認識・読み上げはブラウザ標準(Web Speech API)。マイクを許可してね。
+- APIキーはサーバー側だけで使い、ブラウザには渡さない(127.0.0.1のみ待受、同一オリジンのみ許可)。
+- 音声認識非対応のブラウザでも、入力欄にタイプすれば使えるわ。
+
+## 使い方 (ターミナル版)
 ```bash
 python -m king_english.main --mode chat --level intermediate          # 自由会話+添削
 python -m king_english.main --mode pronunciation --level beginner      # 発音チェック
@@ -26,6 +36,7 @@ VOICEVOX を使う場合はエンジンを起動し `VOICEVOX_SPEAKER` に話者
 ## テスト
 ```bash
 pytest
+node tests/pron.test.js
 ```
 
 ※ 「キングヘイロー」は権利者のキャラクターです。個人利用の範囲で、公式音声の無断利用は避けてください。
