@@ -1,0 +1,7 @@
+anthropic>=0.40
+faster-whisper>=1.0
+sounddevice>=0.4
+numpy>=1.26
+edge-tts>=6.1
+pygame>=2.5
+pytest>=8.0
