@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>King English</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>👑 King English</h1>
+  <div class="controls">
+    <select id="mode"><option value="chat">自由会話 + 添削</option><option value="pron">発音チェック</option></select>
+    <select id="level"></select>
+    <label><input type="checkbox" id="voiceOut" checked> 読み上げ</label>
+  </div>
+</header>
+<div id="warn" hidden>このブラウザは音声認識に未対応よ。Chrome / Edge を使うか、下の入力欄にタイプしなさい。</div>
+<main id="log" aria-live="polite"></main>
+<section id="pronBox" hidden>
+  <div id="target"></div>
+  <div id="result"></div>
+  <button id="nextBtn">次の文</button>
+</section>
+<footer>
+  <button id="mic" title="押して話す">🎙 話す</button>
+  <form id="form"><input id="text" autocomplete="off" placeholder="英語を入力 (またはマイクで話す)"><button>送信</button></form>
+</footer>
+<script src="pron.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

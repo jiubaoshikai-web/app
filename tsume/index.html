@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>詰将棋 ― キングの特訓</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>詰将棋 <small>〜 キングヘイローの特訓 〜</small></h1>
+  </header>
+
+  <main>
+    <section class="king" aria-live="polite">
+      <div class="king-face" aria-hidden="true">👑</div>
+      <div id="say" class="bubble">一流の詰将棋、見せてもらうわよ!</div>
+    </section>
+
+    <section class="picker">
+      <div class="tabs" id="tabs" role="tablist"></div>
+      <div class="list" id="list"></div>
+    </section>
+
+    <section class="game">
+      <h2 id="title"></h2>
+      <p class="rule">先手(攻方)の番。王手の連続で後手玉を詰ませてね。<br>玉方の持駒はなし。</p>
+
+      <div class="board-wrap">
+        <div class="files" id="files"></div>
+        <div class="board-row">
+          <div id="board" class="board"></div>
+          <div class="ranks" id="ranks"></div>
+        </div>
+      </div>
+
+      <div class="hand-area">
+        <span class="hand-label">先手の持駒</span>
+        <div id="hand" class="hand"></div>
+      </div>
+
+      <div id="promo" class="promo" hidden>
+        <span>成りますか?</span>
+        <button data-p="1">成る</button>
+        <button data-p="0">成らない</button>
+      </div>
+
+      <div class="controls">
+        <button id="btn-hint">ヒント</button>
+        <button id="btn-undo">一手戻す</button>
+        <button id="btn-reset">やり直し</button>
+        <button id="btn-answer">解答を見る</button>
+        <button id="btn-next">次の問題 ▶</button>
+      </div>
+      <p id="answer" class="answer" hidden></p>
+    </section>
+  </main>
+
+  <footer>※「キングヘイロー」は権利者のキャラクターです。個人利用の範囲でお楽しみください。</footer>
+
+  <script src="shogi.js"></script>
+  <script src="problems.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -17,6 +17,7 @@ class Turn:
     corrected: str
     feedback_ja: str
     has_mistake: bool
+    raw: str = ""
 
 
 def parse_turn(raw: str, fallback_user_text: str = "") -> Turn:
@@ -32,11 +33,12 @@ def parse_turn(raw: str, fallback_user_text: str = "") -> Turn:
                 corrected=str(data.get("corrected", fallback_user_text)).strip(),
                 feedback_ja=str(data.get("feedback_ja", "")).strip(),
                 has_mistake=bool(data.get("has_mistake", False)),
+                raw=raw,
             )
         except json.JSONDecodeError:
             pass
     # Fallback: treat the whole thing as the English reply.
-    return Turn(reply_en=text, corrected=fallback_user_text, feedback_ja="", has_mistake=False)
+    return Turn(reply_en=text, corrected=fallback_user_text, feedback_ja="", has_mistake=False, raw=raw)
 
 
 class Conversation:
