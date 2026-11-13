@@ -8,14 +8,27 @@ function add(cls, html) {
 }
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-function pickVoice(lang) {
-  const vs = speechSynthesis.getVoices().filter((v) => v.lang.replace('_', '-').startsWith(lang));
-  return vs.find((v) => /natural|google|samantha|kyoko|nanami/i.test(v.name)) || vs[0];
+const store = {
+  get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch { /* ignore */ } },
+};
+function voicesFor(l) { return speechSynthesis.getVoices().filter((v) => v.lang.replace('_', '-').startsWith(l)); }
+function pickVoice(l) {
+  const vs = voicesFor(l), saved = store.get('voice_' + l, '');
+  return vs.find((v) => v.name === saved) || vs.find((v) => /natural|google|samantha|kyoko|nanami/i.test(v.name)) || vs[0];
+}
+function fillVoiceSelects() {
+  for (const [id, l] of [['jaVoice', 'ja'], ['enVoice', 'en']]) {
+    const sel = $(id); sel.innerHTML = '';
+    for (const v of voicesFor(l)) sel.add(new Option(v.name, v.name));
+    const cur = pickVoice(l); if (cur) sel.value = cur.name;
+  }
 }
 function speak(text, lang) {
   return new Promise((res) => {
     if (!$('voiceOut').checked || !text) return res();
     const u = new SpeechSynthesisUtterance(text); u.lang = lang;
+    u.pitch = parseFloat($('pitch').value); u.rate = parseFloat($('rate').value);
     const v = pickVoice(lang.slice(0, 2)); if (v) u.voice = v;
     u.onend = u.onerror = () => res(); speechSynthesis.speak(u);
   });
@@ -89,6 +102,14 @@ async function init() {
   document.body.addEventListener('click', function once() { // browsers need a gesture before speech
     document.body.removeEventListener('click', once); }, { once: true });
   add('king', esc(cfg.greeting_ja)); add('king', esc(cfg.greeting_en));
-  speechSynthesis.getVoices();
+  // voice settings (saved per browser)
+  $('pitch').value = store.get('pitch', '1'); $('rate').value = store.get('rate', '1');
+  const showVals = () => { $('pitchV').textContent = (+$('pitch').value).toFixed(2); $('rateV').textContent = (+$('rate').value).toFixed(2); };
+  showVals(); fillVoiceSelects(); speechSynthesis.onvoiceschanged = fillVoiceSelects;
+  for (const id of ['pitch', 'rate']) $(id).oninput = () => { store.set(id, $(id).value); showVals(); };
+  $('jaVoice').onchange = () => store.set('voice_ja', $('jaVoice').value);
+  $('enVoice').onchange = () => store.set('voice_en', $('enVoice').value);
+  $('voiceTest').onclick = () => { speechSynthesis.cancel(); speak('こんにちは！今日も一緒に英語、がんばりましょう！', 'ja-JP').then(() => speak('Hello! Let us practice English together!', 'en-US')); };
+  $('voiceBright').onclick = () => { $('pitch').value = 1.3; $('rate').value = 1.1; for (const id of ['pitch', 'rate']) store.set(id, $(id).value); showVals(); $('voiceTest').click(); };
 }
 init();

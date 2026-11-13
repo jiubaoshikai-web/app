@@ -15,6 +15,17 @@
     <label><input type="checkbox" id="voiceOut" checked> 読み上げ</label>
   </div>
 </header>
+<details id="voiceSet">
+  <summary>🎚 声の設定</summary>
+  <div class="vs">
+    <label>日本語の声 <select id="jaVoice"></select></label>
+    <label>英語の声 <select id="enVoice"></select></label>
+    <label>高さ <input type="range" id="pitch" min="0.5" max="2" step="0.05" value="1"><output id="pitchV">1.0</output></label>
+    <label>速さ <input type="range" id="rate" min="0.6" max="1.6" step="0.05" value="1"><output id="rateV">1.0</output></label>
+    <button type="button" id="voiceTest">試し聞き</button>
+    <button type="button" id="voiceBright">元気なアイドル風</button>
+  </div>
+</details>
 <div id="warn" hidden>このブラウザは音声認識に未対応よ。Chrome / Edge を使うか、下の入力欄にタイプしなさい。</div>
 <main id="log" aria-live="polite"></main>
 <section id="pronBox" hidden>

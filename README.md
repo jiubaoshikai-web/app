@@ -30,6 +30,11 @@ python -m king_english.main --mode chat --level intermediate          # 自由�
 python -m king_english.main --mode pronunciation --level beginner      # 発音チェック
 python -m king_english.main --text                                     # マイク無し(キーボード)
 ```
+### 声の調整
+- ブラウザ版: 画面の「🎚 声の設定」で声の種類・高さ・速さを変えられるわ(「元気なアイドル風」ボタンで高め＆やや速めに)。設定はブラウザに保存されるの。
+- ターミナル版: `KING_JA_PITCH=+30Hz KING_JA_RATE=+10%`(edge-tts)、`VOICEVOX_PITCH` / `VOICEVOX_SPEED` / `VOICEVOX_INTONATION`(VOICEVOX)で調整。
+- 特定の声優・キャラクターの声を複製する機能はないわ。声質を寄せたいときは、VOICEVOXなど利用規約上問題のない音声の中から話者を選んでね。
+
 VOICEVOX を使う場合はエンジンを起動し `VOICEVOX_SPEAKER` に話者IDを指定。
 環境変数: `KING_MODEL`, `KING_EN_VOICE`, `KING_JA_VOICE`, `VOICEVOX_URL`。
 
